@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GTech Lages</title>
+
+<style>
+
+body{
+font-family: Arial;
+margin:0;
+background: linear-gradient(#0b2d4d,#031426);
+color:white;
+text-align:center;
+}
+
+header{
+padding:30px 20px;
+}
+
+.logo{
+width:120px;
+height:120px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid white;
+}
+
+.container{
+padding:20px;
+}
+
+.btn{
+display:block;
+background:white;
+color:#222;
+padding:15px;
+margin:10px 0;
+border-radius:12px;
+text-decoration:none;
+font-weight:bold;
+}
+
+.btn img{
+vertical-align:middle;
+margin-right:8px;
+}
+
+.card{
+background:white;
+color:black;
+padding:20px;
+border-radius:15px;
+margin-top:20px;
+}
+
+input,textarea{
+width:100%;
+padding:10px;
+margin:8px 0;
+border-radius:8px;
+border:1px solid #ccc;
+font-size:15px;
+}
+
+button{
+background:#25D366;
+color:white;
+border:none;
+padding:14px;
+border-radius:10px;
+font-size:16px;
+font-weight:bold;
+}
+
+/* dropdown */
+
+.dropdown{
+position:relative;
+width:100%;
+margin-top:8px;
+}
+
+.dropdown-btn{
+background:white;
+color:black;
+padding:10px;
+border-radius:8px;
+border:1px solid #ccc;
+cursor:pointer;
+text-align:left;
+position:relative;
+}
+
+.arrow{
+position:absolute;
+right:10px;
+top:50%;
+transform:translateY(-50%);
+}
+
+.dropdown-list{
+display:none;
+position:absolute;
+background:white;
+color:black;
+width:100%;
+border:1px solid #ccc;
+border-radius:8px;
+margin-top:5px;
+z-index:10;
+}
+
+.dropdown-list div{
+padding:10px;
+border-bottom:1px solid #eee;
+cursor:pointer;
+}
+
+.dropdown-list div:hover{
+background:#f2f2f2;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<img src="logo.png" class="logo">
+
+<h1>GTech Lages</h1>
+<div>Assistência Técnica de Celulares 📱</div>
+
+</header>
+
+<div class="container">
+
+<a class="btn" href="#orcamento">🔧 Fazer Orçamento</a>
+
+<a class="btn" href="https://api.whatsapp.com/send?phone=5549998079217">
+<img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="20">
+WhatsApp
+</a>
+
+<a class="btn" href="https://instagram.com/gtech.lages">
+<img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="20">
+Instagram
+</a>
+
+<a class="btn" href="https://maps.google.com/?q=Lages+SC">
+<img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" width="20">
+Localização
+</a>
+
+<div class="card" id="orcamento">
+
+<h2>Solicitar Orçamento</h2>
+
+<form onsubmit="enviarWhats(event)">
+
+<label>Marca</label>
+
+<div class="dropdown">
+
+<div class="dropdown-btn" onclick="abrirLista('marcaLista')">
+Selecionar marca
+<span class="arrow">▼</span>
+</div>
+
+<div class="dropdown-list" id="marcaLista">
+
+<div onclick="selecionar('Samsung','marca')">Samsung</div>
+<div onclick="selecionar('iPhone','marca')">iPhone</div>
+<div onclick="selecionar('Xiaomi','marca')">Xiaomi</div>
+<div onclick="selecionar('Motorola','marca')">Motorola</div>
+<div onclick="selecionar('Outra','marca')">Outra</div>
+
+</div>
+
+<input type="hidden" id="marca">
+
+</div>
+
+<label>Modelo</label>
+
+<input id="modelo" placeholder="Digite o modelo do celular">
+
+<label>Problema</label>
+
+<div class="dropdown">
+
+<div class="dropdown-btn" onclick="abrirLista('problemaLista')">
+Selecionar problema
+<span class="arrow">▼</span>
+</div>
+
+<div class="dropdown-list" id="problemaLista">
+
+<div onclick="selecionar('Troca de tela','problema')">Troca de tela</div>
+<div onclick="selecionar('Troca de bateria','problema')">Troca de bateria</div>
+<div onclick="selecionar('Celular não liga','problema')">Celular não liga</div>
+<div onclick="selecionar('Outro problema','problema')">Outro problema</div>
+
+</div>
+
+<input type="hidden" id="problema">
+
+</div>
+
+<textarea id="descricao" placeholder="Descreva o problema"></textarea>
+
+<br><br>
+
+<button type="submit">Enviar Orçamento</button>
+
+</form>
+
+</div>
+
+</div>
+
+<script>
+
+function abrirLista(id){
+
+let lista=document.getElementById(id)
+
+if(lista.style.display=="block"){
+lista.style.display="none"
+}else{
+lista.style.display="block"
+}
+
+}
+
+function selecionar(valor,tipo){
+
+document.getElementById(tipo).value=valor
+
+let btn=document.querySelectorAll(".dropdown-btn")
+
+btn.forEach(b=>{
+if(b.onclick.toString().includes(tipo+"Lista")){
+b.childNodes[0].nodeValue=valor
+}
+})
+
+document.getElementById(tipo+"Lista").style.display="none"
+
+}
+
+function enviarWhats(event){
+
+event.preventDefault()
+
+let marca=document.getElementById("marca").value
+let modelo=document.getElementById("modelo").value
+let problema=document.getElementById("problema").value
+let descricao=document.getElementById("descricao").value
+
+let mensagem =
+"Olá! Quero um orçamento na GTech Lages.%0A%0A"+
+"Marca: "+marca+"%0A"+
+"Modelo: "+modelo+"%0A"+
+"Problema: "+problema+"%0A"+
+"Descrição: "+descricao
+
+window.open("https://api.whatsapp.com/send?phone=5549998079217&text="+mensagem)
+
+}
+
+</script>
+
+</body>
+</html>
